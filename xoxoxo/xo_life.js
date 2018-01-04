@@ -1,22 +1,22 @@
 
-const MoveDist = 10;
-const BaseSpeed = 600;
-const BuggPopulation = 10;
+const MoveDist = 5;        //default 10
+const BaseSpeed = 600;     //default 600
+const BuggPopulation = 10; //default 10
 
 let buggC = document.getElementsByClassName("bugg");
 let yPos = document.getElementById("yPos");
 let xPos = document.getElementById("xPos");
 let windowDim = document.getElementById("windowDim");
 let buggField = document.getElementById("buggField");
-let x = window.innerWidth;
-let y = window.innerHeight;
+let winY = window.innerWidth;
+let winX = window.innerHeight;
 let buggCount = 0;
 let startCount = 0;
 let buggyCount = 0;
 let newBugg;
 let buggArray = [];
 let collisonCount = 0;
-windowDim.innerHTML = "Width:  " + x +"  Height:  " + y;
+windowDim.innerHTML = "Height:  " + winX +"  Width:  " + winY;
 
 //Bugg Constuctor
 function Bugg (name){
@@ -25,8 +25,8 @@ function Bugg (name){
   let rngX;
   let rngy;
 
-  rngX = rngControl(x);
-  rngY = rngControl(y);
+  rngX = rngControl(winX);
+  rngY = rngControl(winY);
   buggR = rngControl(255);
   buggG = rngControl(255);
   buggB = rngControl(255);
@@ -41,7 +41,6 @@ function Bugg (name){
     this.sex = 'X';
     this.buggColor = "rgb("+230+"," +167+","+ 26+");";
   }
-
 
   this.name = name;
   this.number = buggCount;
@@ -78,8 +77,8 @@ function buggMovement(buggID){
   let buggObject = {name: buggID,xPOS: 0,yPOS: 0};
   buggArray.push(buggObject);
   //set the random position inside start
-  let buggYPos = rngControl(x);
-  let buggXPos = rngControl(y);
+  let buggXPos = rngControl(winX);
+  let buggYPos = rngControl(winY);
 
   setInterval(function(){
     //will update the new buggObject properties at each interval
@@ -89,10 +88,10 @@ function buggMovement(buggID){
     //keep this inside the setInterval function.
     let rngMove = rngControl(4);
     //stops everything if a bugs goes out of bounds
-    if (buggYPos >= x || buggYPos <= 0){
+    if (buggXPos >= winX || buggXPos <= 0){
       return 0;
     }
-    if (buggXPos >= y || buggXPos <= 0){
+    if (buggYPos >= winY || buggYPos <= 0){
       return 0;
     }
 
@@ -104,14 +103,14 @@ function buggMovement(buggID){
       }
       buggNew.setAttribute("style","left:" + (buggYPos) + "px; top:"+ buggXPos+"px; border-left:4px solid white; background-color:"+bColor+'"');
     }else if (rngMove === 2){
-      if (buggYPos >= x - 50){
+      if (buggYPos >= winY - 50){
         buggYPos = buggYPos - MoveDist;
       }else{
         buggYPos = buggYPos + MoveDist;
       }
       buggNew.setAttribute("style","left:" + (buggYPos) + "px; top:"+ buggXPos+"px; border-right:4px solid white;  background-color:"+bColor+'"');
     }else if (rngMove === 3){
-      if (buggXPos >= y - 50){
+      if (buggXPos >= winX - 50){
         buggXPos = buggXPos - MoveDist;
       }else {
         buggXPos = buggXPos + MoveDist;
@@ -138,11 +137,11 @@ function buggPositionCheck(arrayData){
   setInterval(function(){
     for (i=0; i<= buggPop; i++){
       for (j=i+1; j< buggPop; j++){
-         let bugg_data = ( arrayData[i].name + "[" + arrayData[i].xPOS+","+ arrayData[i].yPOS+"]," + arrayData[j].name + "[" + arrayData[j].xPOS +","+  arrayData[j].yPOS+"]" );
+         let bugg_data = ( arrayData[i].name + "[X" + arrayData[i].xPOS+",Y"+ arrayData[i].yPOS+"]," + arrayData[j].name + "[X" + arrayData[j].xPOS +",Y"+  arrayData[j].yPOS+"]" );
          console.log(bugg_data);
          // document.getElementById("bugg_data").innerHTML = bugg_data;
-        if( arrayData[i].xPOS <= arrayData[j].xPOS && arrayData[i].xPOS >= arrayData[j].xPOS-50 ){
-          if(arrayData[i].yPOS >= arrayData[j].yPOS - 50 && arrayData[i].yPOS <= arrayData[j].yPOS ){
+        if( arrayData[i].xPOS === arrayData[j].xPOS + 50 || arrayData[i].xPOS === arrayData[j].xPOS-50 ){
+          if(arrayData[i].yPOS === arrayData[j].yPOS - 50 || arrayData[i].yPOS === arrayData[j].yPOS + 50 ){
             collisonCount = collisonCount + 1;
             document.getElementById("count").innerHTML = collisonCount;
             console.log("POSIITON X MATCHES");
