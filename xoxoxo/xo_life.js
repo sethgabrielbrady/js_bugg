@@ -1,23 +1,3 @@
-// Xs and Os will use the basic js_life example to populate the screen with
-// two types of objects - X's and O's. Each object type is supposed to represent a
-// different sex, therefore the basic rules of thie simulation will be
-//
-// 1) When Xs and O's meet, they have a chance to populate the screen with another
-// object(ie birth offsrping). Initially, the sex of the offspring will be random.
-//
-// 2) When two X's cross paths, there will be a smaller chance that one is destrpyed
-// in the encounter. Initially, this too will be random but may change as traits
-// given to each type.
-//
-// Eventually properties such as random and inherited traits, social standing,
-// etc will be added in a very basic form.
-//
-
-//1) give each bugg a sex property
-//2) log encounter rates
-//3) move forward
-//
-
 
 const MoveDist = 10;
 const BaseSpeed = 600;
